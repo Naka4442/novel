@@ -1,7 +1,7 @@
 <template>
   <router-view/>
 </template>
-
+<!-- стили действуют на всё -->
 <style>
   @font-face {
     font-family: "Everlasting";

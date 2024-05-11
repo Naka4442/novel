@@ -8,7 +8,7 @@ export default createStore({
         type : "history",
         text : "Текст 1",
         background : "morning.jpg",
-        heroes : []
+        heroes : ["Slave.png", "cat.png"]
       },
       {
         type : "history",

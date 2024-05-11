@@ -1,5 +1,8 @@
 <template>
   <main :style="{backgroundImage : `url(${backgroundUrl})`}">
+    <section class="heroes">
+      <img v-for="(hero, i) in slide.heroes" :key="i" :src="heroUrl(hero)" alt="">
+    </section>
     <section class="story" @click="nextSlide">
       <p>{{ slide.text }}</p>
     </section>
@@ -8,7 +11,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-// @ is an alias to /src
 export default {
   data(){
     return {
@@ -29,7 +31,10 @@ export default {
     }
   },
   methods : {
-    ...mapActions(['nextSlide'])
+    ...mapActions(['nextSlide']),
+    heroUrl(path){
+      return require(`../assets/heroes/${path}`)
+    }
   },
   name: 'HomeView',
   components: {
@@ -46,9 +51,18 @@ main{
   justify-content: flex-end;
   background-size: cover;
 }
+.heroes{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.heroes>img{
+  width: 200px;
+  
+}
 .story{
   width: calc(100% - 40px);
-  min-height: 260px;
+  min-height: 130px;
   background-color: rgba(255, 99, 71, 0.461);
   display: flex;
   justify-content: center;

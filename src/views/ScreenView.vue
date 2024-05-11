@@ -3,19 +3,24 @@
     <section class="heroes">
       <img v-for="(hero, i) in slide.heroes" :key="i" :src="heroUrl(hero)" alt="">
     </section>
-    <section class="story" @click="nextSlide">
-      <p>{{ slide.text }}</p>
-    </section>
-  </main>
+    <StoryBlock v-if="slide.type === 'history'" :text="slide.text" />
+    <DialogBlock v-else-if="slide.type === 'dialog'" :text="slide.text" :answers="slide.answers" />
+</main>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
+import StoryBlock from '@/components/StoryBlock.vue';
+import DialogBlock from '@/components/DialogBlock.vue';
 export default {
   data(){
     return {
 
     }
+  },
+  components : {
+    StoryBlock,
+    DialogBlock
   },
   computed : {
     ...mapGetters([
@@ -31,13 +36,9 @@ export default {
     }
   },
   methods : {
-    ...mapActions(['nextSlide']),
     heroUrl(path){
       return require(`../assets/heroes/${path}`)
     }
-  },
-  name: 'HomeView',
-  components: {
   }
 }
 </script>
@@ -60,21 +61,4 @@ main{
   width: 200px;
   
 }
-.story{
-  width: calc(100% - 40px);
-  min-height: 130px;
-  background-color: rgba(255, 99, 71, 0.461);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px;
-}
-.story>p{
-  font-family: "Everlasting";
-  font-size: 25px;
-  text-align: center;
-
-}
-
 </style>

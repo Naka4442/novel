@@ -22,7 +22,6 @@ export default {
   background-color: rgba(255, 99, 71, 0.461);
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   padding: 20px;
 }
@@ -33,20 +32,17 @@ export default {
 
 }
 .answers{
-    display: flex;
-    justify-content: center;
     gap: 20px;
+    list-style: lower-alpha;
 }
 .answers>li{
-    list-style-type: none;
-    width: 200px;
-    height: 30px;
-    background-color: #eee;
     border-radius: 5px;
     font-family: "Everlasting";
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
+    transition: 0.3s;
+}
+.answers>li:hover{
+  transition: 0.3s;
+  color: #4acf4a;
 }
 </style>

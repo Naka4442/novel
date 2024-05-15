@@ -3,6 +3,7 @@
     <section class="heroes">
       <img v-for="(hero, i) in slide.heroes" :key="i" :src="heroUrl(hero)" alt="">
     </section>
+    <p>{{ userName }}</p>
     <StoryBlock v-if="slide.type === 'history'" :text="slide.text" />
     <DialogBlock v-else-if="slide.type === 'dialog'" :text="slide.text" :answers="slide.answers" />
 </main>
@@ -25,7 +26,8 @@ export default {
   computed : {
     ...mapGetters([
       'current',
-      'story'
+      'story',
+      'userName'
     ]),
     slide(){
       let c = this.current;

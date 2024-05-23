@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
+    name: 'menu',
+    component: () => import('../views/MainMenuView.vue')
+  },
+  {
+    path: '/game',
     name: 'screen',
     component: () => import('../views/ScreenView.vue')
   },

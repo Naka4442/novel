@@ -1,5 +1,5 @@
 <template>
-  <main :style="{backgroundImage : `url(${backgroundUrl})`}">
+  <main v-if="story" :style="{backgroundImage : `url(${backgroundUrl})`}">
     <section class="heroes">
       <img v-for="(hero, i) in slide.heroes" :key="i" :src="heroUrl(hero)" alt="">
     </section>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import StoryBlock from '@/components/StoryBlock.vue';
 import DialogBlock from '@/components/DialogBlock.vue';
 export default {
@@ -30,17 +30,32 @@ export default {
       'userName'
     ]),
     slide(){
-      let c = this.current;
-      return this.story[c];
+      if(this.story){
+        let c = this.current;
+        return this.story[c];
+      }
+      return {}
     },
     backgroundUrl(){
-      return require(`../assets/backgrounds/${this.slide.background}`)
+      if(this.story){
+        return require(`../assets/backgrounds/${this.slide.background}`)
+      }
+      return false;
     }
   },
   methods : {
+    ...mapActions([
+      'getStory'
+    ]),
     heroUrl(path){
-      return require(`../assets/heroes/${path}`)
+      if(this.story){
+        return require(`../assets/heroes/${path}`)
+      }
+      return false;
     }
+  },
+  created(){
+    this.getStory();
   }
 }
 </script>

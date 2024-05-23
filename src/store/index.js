@@ -5,48 +5,7 @@ export default createStore({
   state: {
     apiUrl : "http://141.8.194.105:3000",
     current : 0,
-    story : [
-        {
-            "type" : "history",
-            "text" : "Текст 1",
-            "background" : "morning.jpg",
-            "heroes" : []
-          },
-          {
-            "type" : "history",
-            "text" : "Текст 2",
-            "background" : "evening.jpg",
-            "heroes" : ["Slave.png", "cat.png"]
-          },
-          {
-            "type" : "dialog",
-            "text" : "Текст выбора",
-            "answers" : [
-              {
-                "text" : "Подобрать кота",
-                "way" : 3
-              },
-              {
-                "text" : "Отказаться",
-                "way" : 4
-              }
-            ],
-            "background" : "evening.jpg",
-            "heroes" : ["Slave.png", "cat.png"]
-          },
-          {
-            "type" : "history",
-            "text" : "Вы решили подобрать кота",
-            "background" : "evening.jpg",
-            "heroes" : ["cat.png"]
-          },
-          {
-            "type" : "history",
-            "text" : "Вы решили отказаться",
-            "background" : "evening.jpg",
-            "heroes" : ["Slave.png"]
-          }
-    ],
+    story : false,
     token : false,
     user : false
   },
@@ -124,7 +83,8 @@ export default createStore({
       });
       if(req.ok){
         const result = await req.json();
-        ctx.commit("setStory", result.story);
+        console.log("История получена", JSON.parse(result.story))
+        ctx.commit("setStory", JSON.parse(result.story));
       }
       return req.ok;
     }

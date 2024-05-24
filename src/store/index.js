@@ -13,16 +13,16 @@ export default createStore({
   getters: {
     current : (state) => state.current,
     story : (state) => state.story,
-    userName : (state) => state.user.name,
+    userName : (state) => state.user ? state.user.name : false,
   },
   // функции, меняющие состояние
   mutations: {
     setUser(state, user){
-      localStorage.setItem("user", JSON.stringify(user))
+      user ? localStorage.setItem("user", JSON.stringify(user)) : localStorage.removeItem("user");
       state.user = user;
     },
     setToken(state, token){
-      localStorage.setItem("token", token)
+      token ? localStorage.setItem("token", token) : localStorage.removeItem("token");
       state.token = token;
     },
     setStory(state, story){
@@ -61,6 +61,11 @@ export default createStore({
         await ctx.dispatch("me");
       }
       return req.ok;
+    },
+    async exit(ctx){
+      ctx.commit("setUser", false);
+      ctx.commit("setToken", false);
+      return true;
     },
     async me(ctx){
       const req = await fetch(`${ctx.state.apiUrl}/users/me/`, {

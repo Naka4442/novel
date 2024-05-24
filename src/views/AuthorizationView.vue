@@ -28,7 +28,7 @@ methods : {
         console.log("Данные авторизации", data);
         this.authorization(data).then(result => {
             if(result){
-                this.$router.push({name : "screen"});
+                this.$router.push({name : "menu"});
             }
             else{
                 alert("Неверные данные");

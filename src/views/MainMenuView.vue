@@ -1,6 +1,11 @@
 <template>
     <main>
-        <h1>Главное меню</h1>
+        <header>
+            <h1>Главное меню</h1>
+            <div v-if="userName" class="profile-name">
+                <h4>{{ userName }}</h4>
+            </div>
+        </header>
         <section class="buttons">
             <div class="menu-buttons">
                 <button class="menu-button">Новая игра</button>
@@ -8,22 +13,39 @@
                 <button class="menu-button">Сохранения</button>
             </div>
             <div class="loginout">
-                <router-link :to="{name : 'authorization'}"><button class="login-button">Войти</button></router-link>
+                <button v-if="userName" class="login-button" @click="exit()">Выйти</button>
+                <router-link v-else :to="{name : 'authorization'}"><button class="login-button">Войти</button></router-link>
             </div>
         </section>
     </main>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default{
-
+    computed : {
+        ...mapGetters([
+            "userName"
+        ])
+    },
+    methods : {
+        ...mapActions([
+            "me",
+            "exit"
+        ])
+    },
+    created(){
+        if(!this.userName){
+            this.me();
+        }
+    }
 }
 </script>
 <style scoped>
 main{
     width: 100%;
     height: 100vh;
-    background-image: url('../assets/backgrounds/morning.jpg');
+    background-image: url("../assets/backgrounds/morning.jpg");
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -31,6 +53,13 @@ main{
     font-family: "Everlasting";
     color: white;
     
+}
+header{
+    width: calc(100% - 100px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
 }
 .buttons{
     width: 100%;

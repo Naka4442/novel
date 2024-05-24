@@ -6,8 +6,8 @@ export default createStore({
     apiUrl : "http://141.8.194.105:3000",
     current : 0,
     story : false,
-    token : false,
-    user : false
+    token : localStorage.getItem("token") ? localStorage.getItem("token") : false,
+    user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : false
   },
   // функции, выдающие в компоненты переменные из состояния
   getters: {
@@ -18,9 +18,11 @@ export default createStore({
   // функции, меняющие состояние
   mutations: {
     setUser(state, user){
+      localStorage.setItem("user", JSON.stringify(user))
       state.user = user;
     },
     setToken(state, token){
+      localStorage.setItem("token", token)
       state.token = token;
     },
     setStory(state, story){

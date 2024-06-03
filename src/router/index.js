@@ -8,7 +8,7 @@ const routes = [
   },
   {
     path: '/game',
-    name: 'screen',
+    name: 'game',
     component: () => import('../views/ScreenView.vue')
   },
   {
@@ -20,6 +20,12 @@ const routes = [
     path: '/authorization',
     name: 'authorization',
     component: () => import('../views/AuthorizationView.vue')
+  },
+
+  {
+    path: '/saves',
+    name: 'saves',
+    component: () => import('../views/SavesView.vue')
   }
   
 ]

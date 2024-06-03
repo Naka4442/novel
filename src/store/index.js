@@ -7,13 +7,15 @@ export default createStore({
     current : 0,
     story : false,
     token : localStorage.getItem("token") ? localStorage.getItem("token") : false,
-    user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : false
+    user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : false,
+    saves : localStorage.getItem("saves") ? JSON.parse(localStorage.getItem("saves")) : false
   },
   // функции, выдающие в компоненты переменные из состояния
   getters: {
     current : (state) => state.current,
     story : (state) => state.story,
     userName : (state) => state.user ? state.user.name : false,
+    saves : (state) => state.saves
   },
   // функции, меняющие состояние
   mutations: {
@@ -27,15 +29,27 @@ export default createStore({
     },
     setStory(state, story){
       state.story = story;
+    },
+    setSaves(state, saves){
+      saves ? localStorage.setItem("saves", JSON.stringify(saves)) : localStorage.removeItem("saves");
+      state.saves = saves;
     }
   },
   // действия (функции, выполняющие какую-то логику, например авторизацию или регистрацию)
   actions: {
     nextSlide(ctx){
-      ctx.state.current++;
+      let story = ctx.getters.story;
+      let currentSlide = story[ctx.getters.current];
+      let nextFrame = story.find(frame => frame._id == currentSlide.way);
+      ctx.state.current = story.indexOf(nextFrame);
     },
-    currentSlide(ctx, index){
-      ctx.state.current = index;
+    goToSlide(ctx, id){
+      let story = ctx.getters.story;
+      let slide = story.find(frame => frame._id == id);
+      ctx.state.current = story.indexOf(slide);
+    },
+    goToFirstSlide(ctx){
+      ctx.state.current = 0;
     },
     async registration(ctx, data){
       const req = await fetch(`${ctx.state.apiUrl}/users/registration/`, {
@@ -93,6 +107,46 @@ export default createStore({
         console.log("История получена", JSON.parse(result.story))
         ctx.commit("setStory", JSON.parse(result.story));
       }
+      return req.ok;
+    },
+    async getSaves(ctx){
+      const req = await fetch(`${ctx.state.apiUrl}/users/saves/`, {
+        method : "GET",
+        headers : {
+          "Content-Type" : "application/json;charset=utf-8",
+          "Authorization" : `Bearer ${ctx.state.token}`
+        }
+      });
+      if(req.ok){
+        const result = await req.json();
+        console.log("Сохранения получены", result.saves);
+        ctx.commit("setSaves", result.saves);
+      }
+      return req.ok;
+    },
+    async save(ctx, frame){
+      const req = await fetch(`${ctx.state.apiUrl}/users/save/`, {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json;charset=utf-8",
+          "Authorization" : `Bearer ${ctx.state.token}`
+        },
+        body : JSON.stringify({ frame })
+      });
+      await ctx.dispatch("getSaves");
+      return req.ok;
+    },
+    async deleteSave(ctx, id){
+      console.log(id);
+      const req = await fetch(`${ctx.state.apiUrl}/users/saves/`, {
+        method : "DELETE",
+        headers : {
+          "Content-Type" : "application/json;charset=utf-8",
+          "Authorization" : `Bearer ${ctx.state.token}`
+        },
+        body : JSON.stringify({ id })
+      });
+      await ctx.dispatch("getSaves");
       return req.ok;
     }
   },

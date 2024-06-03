@@ -8,9 +8,9 @@
         </header>
         <section class="buttons">
             <div class="menu-buttons">
-                <button class="menu-button">Новая игра</button>
-                <button class="menu-button">Продолжить</button>
-                <button class="menu-button">Сохранения</button>
+                <button class="menu-button" @click="newGame" @mouseenter="playSound">Новая игра</button>
+                <button v-if="userName" class="menu-button" @click="continueGame" @mouseenter="playSound">Продолжить</button>
+                <router-link v-if="userName" class="menu-button" :to="{name : 'saves'}" @mouseenter="playSound">Сохранения</router-link>
             </div>
             <div class="loginout">
                 <button v-if="userName" class="login-button" @click="exit()">Выйти</button>
@@ -23,21 +23,46 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default{
+    data(){
+        return {
+            audio : false
+        }
+    },
     computed : {
         ...mapGetters([
-            "userName"
+            "userName",
+            "saves"
         ])
     },
     methods : {
         ...mapActions([
             "me",
-            "exit"
-        ])
+            "exit",
+            "goToSlide",
+            "goToFirstSlide"
+        ]),
+        continueGame(){
+            if(this.saves){
+                let lastSave = this.saves[this.saves.length - 1];
+                this.goToSlide(lastSave.frame);
+                this.$router.push({name : "game"});
+            }
+        },
+        newGame(){
+            this.goToFirstSlide();
+            this.$router.push({name : "game"});
+        },
+        playSound(){
+          this.audio.play();
+        }
     },
     created(){
         if(!this.userName){
             this.me();
         }
+    },
+    mounted(){
+      this.audio = new Audio(require("../assets/sound/button.mp3"));
     }
 }
 </script>
@@ -81,6 +106,8 @@ header{
 	color: white;
 }
 .menu-button{
+    box-sizing: content-box;
+    border: none;
     text-decoration: none;
     font-weight: normal;
     font-size: 25px;
@@ -91,6 +118,7 @@ header{
     width: 300px;
     font-family: "Everlasting";
     border-radius: 5px;
+    text-align: center;
 }
 .loginout{
     padding: 20px;

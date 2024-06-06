@@ -6,6 +6,7 @@
             <input type="password" placeholder="Пароль" v-model="user.password">
             <input type="text" placeholder="Имя" v-model="user.name">
             <button @click="makeRegistration">Зарегистрироваться</button>
+            <router-link :to="{name : 'authorization'}">Авторизация</router-link>
         </form>
     </main>
 </template>

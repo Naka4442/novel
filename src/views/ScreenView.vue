@@ -73,9 +73,9 @@ main{
   display: flex;
   justify-content: center;
   gap: 10px;
+  margin-bottom: -230px;
 }
 .heroes>img{
-  width: 200px;
-  
+  height: 500px;
 }
 </style>

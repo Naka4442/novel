@@ -48,17 +48,19 @@ export default {
 .story{
   width: calc(100% - 40px);
   min-height: 130px;
-  background-color: rgba(255, 99, 71, 0.461);
+  background-color:rgba(0, 0, 0, 0.6); 
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   padding: 20px;
+
 }
 .story>p{
   font-family: "Everlasting";
   font-size: 25px;
   text-align: center;
-
+  color:#ffffff;
 }
 .answers{
     gap: 20px;
@@ -69,10 +71,11 @@ export default {
     font-family: "Everlasting";
     cursor: pointer;
     transition: 0.3s;
+    color: #ffffff;
 }
 .answers>li:hover{
   transition: 0.3s;
-  color: #4acf4a;
+  color: #4ab2cf;
 }
 .setting-buttons{
   color: #8f8c8c;
@@ -80,9 +83,40 @@ export default {
   display: flex;
   justify-content: center;
   align-items: end;
+  font-size: small;
+  background-color: rgba(0, 0, 0, 0.6); 
 
 }
-.setting-buttons:hover{
+.save-button{
+  color: #dad7d7;
+  background-color: #00000000;
+  border-color: #00000000;
+  font-family: "Everlasting";
+}
+.sound-button{
+  color: #dad7d7;
+  background-color: #00000000;
+  border-color: #00000000;
+  font-family: "Everlasting";
+}
+.menu-button{
+  color: #dad7d7;
+  background-color: #00000000;
+  border-color: #00000000;
+  text-decoration: none;
+  font-family: "Everlasting";
+  padding-bottom: 3px;
+  
+}
+.save-button:hover{
   color: #ffffff;
 }
+.sound-button:hover{
+  color: #ffffff;
+}
+.menu-button:hover{
+  color: #ffffff;
+  
+}
+
 </style>

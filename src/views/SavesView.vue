@@ -41,7 +41,7 @@ export default{
             "goToSlide"
         ]),
         textFromFrame(id){
-            return this.story.find(f => f._id == id).text;
+            return this.story.find(f => f._id == id).text.slice(0, 50);
         },
         loadSave(id){
             this.goToSlide(id);

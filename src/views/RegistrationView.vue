@@ -39,7 +39,7 @@ methods : {
 main{
     width: 100vw;
     height: 100vh;
-    background-color: beige;
+    background-color: rgb(69, 212, 252);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,7 +49,7 @@ main{
 form{
     width: 400px;
     height: 400px;
-    background-color: tomato;
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     box-shadow: 0 0 10px black;
     display: flex;
@@ -61,26 +61,27 @@ input{
     width: 330px;
     height: 25px;
     border-radius: 5px;
-    border: 2px solid #ac4431;
+    border: 2px solid #00075e;
     outline: none;
     padding-left: 20px;
     transition: 0.5s;
 }
 input:focus{
-    box-shadow: 0 0 5px #961919;
+    box-shadow: 0 0 5px #00075e;
     transition: 0.5s;
 }
 button{
     width: 350px;
     height: 30px;
-    background-color: greenyellow;
+    background-color: rgb(253, 254, 251);
     border: none;
-    border-bottom: 3px solid #5c8919;
+    border-bottom: 3px solid #9d9e9c;
     cursor: pointer;
     border-radius: 5px;
 }
 h2{
     font-family: "Everlasting";
     font-size: 30px;
+    color: aliceblue;
 }
 </style>
